@@ -64,10 +64,13 @@ Aşağıdaki takimSkoru() fonksiyonununda aşağıdakileri yapınız:
 Not: Bu fonskiyon, aşağıdaki diğer görevler için de bir callback fonksiyonu olarak da kullanılacak
 */
 
-function takimSkoru(/*Kodunuzu buraya yazınız*/){
-    /*Kodunuzu buraya yazınız*/
+function takimSkoru(){
+  return Math.floor(Math.random() * (25 - 10) + 10);
+  return ilkTakımSkor
 }
-
+console.log("----------------")
+console.log(takimSkoru());
+console.log("----------------")
 
 
 
@@ -86,9 +89,53 @@ Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
 }
 */ 
 
-function macSonucu(/*Kodunuzu buraya yazınız*/){
-  /*Kodunuzu buraya yazınız*/
+function macSonucu(fonksiyon,ceyrek){
+  let evSkor = {
+    birE : fonksiyon(),
+    ikiE : fonksiyon(),
+    ucE : fonksiyon(),
+    dortE : fonksiyon()
+  }
+  let depSkor = {
+    birD : fonksiyon(),
+    ikiD : fonksiyon(),
+    ucD : fonksiyon(),
+    dortD : fonksiyon()
+  }
+
+  if(ceyrek==1){
+    let macSkoru = {
+      "EvSahibi" : evSkor.birE,
+      "KonukTakim" : evSkor.birE
+    }
+    return macSkoru
+  }
+  else if(ceyrek==2){
+      let macSkoru = {
+        "EvSahibi" : evSkor.birE + evSkor.ikiE,
+        "KonukTakim" : depSkor.birD + depSkor.ikiD,
+      } 
+      return macSkoru
+  }
+  else if(ceyrek==3){
+    let macSkoru = {
+      "EvSahibi" : evSkor.birE + evSkor.ikiE + evSkor.ucE,
+    "KonukTakim" : depSkor.birD + depSkor.ikiD+ depSkor.ucD,
+    } 
+    return macSkoru
 }
+else if(ceyrek==4){
+  let macSkoru = {
+    "EvSahibi" : evSkor.birE+evSkor.ikiE+evSkor.ucE+evSkor.dortE,
+    "KonukTakim" : depSkor.birD+depSkor.ikiD+depSkor.ucD+depSkor.dortD,
+  } 
+  return macSkoru
+}
+  
+}
+
+  
+
 
 
 
@@ -109,10 +156,16 @@ Aşağıdaki periyotSkoru() fonksiyonununda aşağıdakileri yapınız:
   */
 
 
-function periyotSkoru(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
-
+function periyotSkoru(fonksiyon) {
+  let evSayi = fonksiyon();
+  let depSayi = fonksiyon();
+  let periyotSonucu = {
+    "EvSahibi" : evSayi,
+    "KonukTakim" : depSayi
+  }
+  return periyotSonucu
 }
+
 
 
 /* Zorlayıcı Görev 5: skorTabelasi() 
@@ -146,8 +199,48 @@ MAÇ UZAR ise skorTabelasi(periyotSkoru,takimSkoru,4)
 ] */
 // NOTE: Bununla ilgili bir test yoktur. Eğer logladığınız sonuçlar yukarıdakine benziyor ise tmamlandı sayabilirsiniz.
 
-function skorTabelasi(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
+function skorTabelasi(fonksiyon,fonksiyon2,ceyrek) {
+  let evSkor = {
+    birE : fonksiyon(),
+    ikiE : fonksiyon(),
+    ucE : fonksiyon(),
+    dortE : fonksiyon()
+  }
+  let depSkor = {
+    birD : fonksiyon(),
+    ikiD : fonksiyon(),
+    ucD : fonksiyon(),
+    dortD : fonksiyon()
+  }
+
+  if(ceyrek==1){
+    let macSkoru = {
+      "EvSahibi" : evSkor.birE,
+      "KonukTakim" : evSkor.birE
+    }
+    return macSkoru
+  }
+  else if(ceyrek==2){
+      let macSkoru = {
+        "EvSahibi" : evSkor.ikiE,
+        "KonukTakim" : depSkor.ikiD,
+      } 
+      return macSkoru
+  }
+  else if(ceyrek==3){
+    let macSkoru = {
+      "EvSahibi" : evSkor.ucE,
+    "KonukTakim" : depSkor.ucD,
+    } 
+    return macSkoru
+}
+else if(ceyrek==4){
+  let macSkoru = {
+    "EvSahibi" : evSkor.dortE,
+    "KonukTakim" : depSkor.dortD,
+  }
+  return macSkoru
+}
 }
 
 
