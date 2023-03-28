@@ -66,7 +66,6 @@ Not: Bu fonskiyon, aşağıdaki diğer görevler için de bir callback fonksiyon
 
 function takimSkoru(){
   return Math.floor(Math.random() * (25 - 10) + 10);
-  return ilkTakımSkor
 }
 console.log("----------------")
 console.log(takimSkoru());
@@ -90,51 +89,26 @@ Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
 */ 
 
 function macSonucu(fonksiyon,ceyrek){
-  let evSkor = {
-    birE : fonksiyon(),
-    ikiE : fonksiyon(),
-    ucE : fonksiyon(),
-    dortE : fonksiyon()
-  }
-  let depSkor = {
-    birD : fonksiyon(),
-    ikiD : fonksiyon(),
-    ucD : fonksiyon(),
-    dortD : fonksiyon()
-  }
 
-  if(ceyrek==1){
-    let macSkoru = {
-      "EvSahibi" : evSkor.birE,
-      "KonukTakim" : evSkor.birE
-    }
-    return macSkoru
-  }
-  else if(ceyrek==2){
-      let macSkoru = {
-        "EvSahibi" : evSkor.birE + evSkor.ikiE,
-        "KonukTakim" : depSkor.birD + depSkor.ikiD,
-      } 
-      return macSkoru
-  }
-  else if(ceyrek==3){
-    let macSkoru = {
-      "EvSahibi" : evSkor.birE + evSkor.ikiE + evSkor.ucE,
-    "KonukTakim" : depSkor.birD + depSkor.ikiD+ depSkor.ucD,
-    } 
-    return macSkoru
-}
-else if(ceyrek==4){
-  let macSkoru = {
-    "EvSahibi" : evSkor.birE+evSkor.ikiE+evSkor.ucE+evSkor.dortE,
-    "KonukTakim" : depSkor.birD+depSkor.ikiD+depSkor.ucD+depSkor.dortD,
+  const macSkoru = {
+    "EvSahibi" : 0,
+    "KonukTakim" : 0
   } 
+  for(let i = 0;i <= ceyrek;i++) {
+    for(let takim in macSkoru){
+      macSkoru[takim] += fonksiyon();
+    }
+    
+  }
   return macSkoru
 }
-  
-}
+macSonucu(takimSkoru,3);
 
   
+
+
+  
+
 
 
 
@@ -199,49 +173,33 @@ MAÇ UZAR ise skorTabelasi(periyotSkoru,takimSkoru,4)
 ] */
 // NOTE: Bununla ilgili bir test yoktur. Eğer logladığınız sonuçlar yukarıdakine benziyor ise tmamlandı sayabilirsiniz.
 
-function skorTabelasi(fonksiyon,fonksiyon2,ceyrek) {
-  let evSkor = {
-    birE : fonksiyon(),
-    ikiE : fonksiyon(),
-    ucE : fonksiyon(),
-    dortE : fonksiyon()
-  }
-  let depSkor = {
-    birD : fonksiyon(),
-    ikiD : fonksiyon(),
-    ucD : fonksiyon(),
-    dortD : fonksiyon()
-  }
+function skorTabelasi(callback1, callback2, ceyrekSayisi) {
+  const skorDizisi = [];
+  const skorlar = [];
+  for (let i = 1; i <= ceyrekSayisi; i++) {
+    const randomSkor = callback1(callback2);
+    skorDizisi.push(`${i}. Periyot: Ev Sahibi ${randomSkor["EvSahibi"]} - Konuk Takım ${randomSkor["KonukTakim"]}`)
+    skorlar.push({ ...randomSkor, periyotIndex: i });
+  };
+  let toplamSkorEvSahibi= 0;
+  let toplamSkorKonukTakim= 0;
+  for(let i=0; i < skorlar.length; i++){
+    toplamSkorEvSahibi += skorlar[i]["EvSahibi"];
+    toplamSkorKonukTakim += skorlar[i]["KonukTakim"];
+  };
+  while(toplamSkorEvSahibi === toplamSkorKonukTakim) {
+    const uzatmaRandomSkor = callback1(callback2);
+    skorDizisi.push(`${skorlar.length-3}. Uzatma: Ev Sahibi ${uzatmaRandomSkor["EvSahibi"]} - Konuk Takım ${uzatmaRandomSkor["KonukTakim"]}`)
+    skorlar.push({ ...uzatmaRandomSkor, periyotIndex: skorlar.length+1 });
+    toplamSkorEvSahibi += uzatmaRandomSkor["EvSahibi"];
+    toplamSkorKonukTakim += uzatmaRandomSkor["KonukTakim"];
+  };
+  
+  skorDizisi.push(`Maç Sonucu: Ev Sahibi ${toplamSkorEvSahibi} - Konuk Takım ${toplamSkorKonukTakim}`);
+  return skorDizisi;
+};
 
-  if(ceyrek==1){
-    let macSkoru = {
-      "EvSahibi" : evSkor.birE,
-      "KonukTakim" : evSkor.birE
-    }
-    return macSkoru
-  }
-  else if(ceyrek==2){
-      let macSkoru = {
-        "EvSahibi" : evSkor.ikiE,
-        "KonukTakim" : depSkor.ikiD,
-      } 
-      return macSkoru
-  }
-  else if(ceyrek==3){
-    let macSkoru = {
-      "EvSahibi" : evSkor.ucE,
-    "KonukTakim" : depSkor.ucD,
-    } 
-    return macSkoru
-}
-else if(ceyrek==4){
-  let macSkoru = {
-    "EvSahibi" : evSkor.dortE,
-    "KonukTakim" : depSkor.dortD,
-  }
-  return macSkoru
-}
-}
+console.log(skorTabelasi(periyotSkoru, takimSkoru, 4));
 
 
 
